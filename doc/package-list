@@ -1,0 +1,9 @@
+scratchpad.client.connection
+scratchpad.client.datamodel
+scratchpad.client.exception
+scratchpad.client.login
+scratchpad.client.main
+scratchpad.client.todolist
+scratchpad.server.datamodel
+scratchpad.server.login
+scratchpad.server.main
