@@ -130,7 +130,15 @@ public class NoteDialog extends DialogBox {
 	 * This button is on view panel.
 	 */
 	public void closePressed(){
-		// XXX close actionini yaz
+	
+		Action action = new Action();
+		action.setActionType(Action.ActionType.NOTE_CLOSE);
+		action.setObjectId(getId());
+		
+		noteManager.getApplicationManager().getConnectionManager().addAction(action);
+		
+		setVisible(false);
+		noteManager.getNoteDialogList().remove(this);
 	}
 	
 	/**
@@ -153,6 +161,7 @@ public class NoteDialog extends DialogBox {
 		
 		mainPanel.showWidget(Panels.viewPanel.ordinal());
 	}
+	
 	
 	
 	

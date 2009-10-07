@@ -260,5 +260,40 @@ public class QueryManager {
         }
 	}
 
+	public static void closeNote(long id) throws PersistanceManagerException{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Note object = pm.getObjectById(Note.class,id);
+		object.setOpen(false);
+        try {
+        	pm.makePersistent(object);
+        }catch(Exception e){
+        	PersistanceManagerException newE = new PersistanceManagerException("Note [" + object.getTitle() + "] could not be Closed",e);
+        	throw newE;
+        } finally {
+            pm.close();
+        }
+	}
+
+	public static Note openNote(long id) throws PersistanceManagerException{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Note object = pm.getObjectById(Note.class,id);
+		object.setOpen(true);
+        try {
+        	pm.makePersistent(object);
+        }catch(Exception e){
+        	PersistanceManagerException newE = new PersistanceManagerException("Note [" + object.getTitle() + "] could not be opened",e);
+        	throw newE;
+        } finally {
+            pm.close();
+        }
+        //object = pm.getObjectById(ToDoList.class,id);
+        return getNote(id);
+	}
+	
+	public static Note getNote(long id){
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Note object = pm.getObjectById(Note.class,id);
+		return object;
+	}
 
 }

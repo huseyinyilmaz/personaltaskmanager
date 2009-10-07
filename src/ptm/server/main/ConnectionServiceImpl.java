@@ -48,7 +48,7 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 	public Queue<Result> processActions(String user,Queue<Action> actionQueue)throws ScratchpadException {
 		Queue<Result> queue = new LinkedList<Result>();
 		Map<Long,Long> newIds = new LinkedHashMap<Long,Long>();
-		long toDoId;
+		long oid;
 		//Get current user
 		if(!userService.isUserLoggedIn())
 			throw new NotLoggedInException();
@@ -79,57 +79,68 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 					QueryManager.editToDo(a.getObjectId(),a.getString());
 					break;
 				case TODO_OPEN:
-					toDoId =a.getObjectId();
-					if(toDoId<0)
-						toDoId = newIds.get(toDoId);
-					result.setToDo(QueryManager.openToDo(toDoId).toClientObject());
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					result.setToDo(QueryManager.openToDo(oid).toClientObject());
 					break;
 				case TODO_GET:	
-					toDoId =a.getObjectId();
-					if(toDoId<0)
-						toDoId = newIds.get(toDoId);
-					result.setToDo(QueryManager.getToDo(toDoId).toClientObject());
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					result.setToDo(QueryManager.getToDo(oid).toClientObject());
 					break;
 				case TODO_CLOSE:
-					toDoId =a.getObjectId();
-					if(toDoId<0)
-						toDoId = newIds.get(toDoId);
-					QueryManager.closeToDo(toDoId);
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					QueryManager.closeToDo(oid);
 					break;
 				case TODO_MOVE:
-					toDoId =((ObjectListElement)a.getObject()).getId();
-					if(toDoId<0)
-						((ObjectListElement)a.getObject()).setId(newIds.get(toDoId));
+					oid =((ObjectListElement)a.getObject()).getId();
+					if(oid<0)
+						((ObjectListElement)a.getObject()).setId(newIds.get(oid));
 					QueryManager.moveToDo((ObjectListElement)a.getObject());
 					break;
 				//TASK ACTIONS	
 				case TASK_CREATE:
 					//if TodoListId is negative get list created list id from new Ids map.
-					toDoId =a.getObjectId();
-					if(toDoId<0)
-						toDoId = newIds.get(toDoId);
-					result.setObjectId(QueryManager.createTask(toDoId,(ptm.client.datamodel.Task)a.getObject()));
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					result.setObjectId(QueryManager.createTask(oid,(ptm.client.datamodel.Task)a.getObject()));
 					break;
 				case TASK_DELETE:
 					//if TodoListId is negative get list created list id from new Ids map.
-					toDoId =a.getObjectId();
-					if(toDoId<0)
-						toDoId = newIds.get(toDoId);
-					QueryManager.deleteTask(toDoId,(ptm.client.datamodel.Task)a.getObject());
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					QueryManager.deleteTask(oid,(ptm.client.datamodel.Task)a.getObject());
 					break;
 				case TASK_EDIT:
 					//if TodoListId is negative get list created list id from new Ids map.
-					toDoId =a.getObjectId();
-					if(toDoId<0)
-						toDoId = newIds.get(toDoId);
-					QueryManager.editTask(toDoId,(ptm.client.datamodel.Task)a.getObject());
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					QueryManager.editTask(oid,(ptm.client.datamodel.Task)a.getObject());
 					break;
 				case NOTE_CREATE:
 					result.setNote(QueryManager.createNote((ptm.client.datamodel.Note)a.getObject(),currentUser).toClientObject());
+					newIds.put(((ptm.client.datamodel.Note)a.getObject()).getId(), result.getNote().getId());
 					break;
 				case NOTE_DELETE:
 					QueryManager.deleteNote(((ptm.client.datamodel.Note)a.getObject()).getId());
 					break;
+				case NOTE_CLOSE:
+					QueryManager.closeNote(a.getObjectId());
+					break;
+				case NOTE_OPEN:
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					result.setNote(QueryManager.openNote(oid).toClientObject());
+					break;
+
 				}//switch
 				result.setSuccessfull(true);
 			}catch(ScratchpadException e){

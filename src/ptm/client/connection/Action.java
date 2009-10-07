@@ -6,7 +6,7 @@ import java.util.Date;
 public class Action implements Serializable{
 	public enum ActionType {
 		TODO_CREATE,TODO_EDIT,TODO_DELETE,TODO_MOVE,TODO_GET,TODO_OPEN,TODO_CLOSE,
-		NOTE_CREATE,NOTE_EDIT,NOTE_DELETE,NOTE_MOVE,NOTE_GET,
+		NOTE_CREATE,NOTE_EDIT,NOTE_DELETE,NOTE_MOVE,NOTE_GET,NOTE_OPEN,NOTE_CLOSE,
 		TASK_CREATE,TASK_EDIT,TASK_DELETE
 	}
 	private static long actionIdHolder = 1;
