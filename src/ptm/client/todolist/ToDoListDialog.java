@@ -161,28 +161,12 @@ public class ToDoListDialog extends DialogBox {
 	    listPanel.setCellHorizontalAlignment(buttonPanel, DockPanel.ALIGN_CENTER);
 	    setWidget(mainPanel);
 	    
-	    // Add styles to elements in the stock list table.
-	    /*
-	    table.getRowFormatter().addStyleName(0, "todoListHeaderRow");
-	    table.addStyleName("watchList");
-	    table.getCellFormatter().addStyleName(0, 1, "watchListNumericColumn");
-	    table.getCellFormatter().addStyleName(0, 2, "watchListNumericColumn");
-	    table.getCellFormatter().addStyleName(0, 3, "watchListRemoveColumn"); 
-	    */
-	    
 	    taskTable.addClickHandler(toDoListManager.getEventManager());
 	    //Fill Task table
 	    Collections.sort(toDoList.getList());
 	    for (int i=0;i<toDoList.getList().size();i++){
-	    	//Task t = toDoList.getList().get(i);
 	    	addTaskTableRow(i, toDoList.getList().get(i));
-	    	//taskTable.setWidget(i, 0, new CheckBox("",t.getIsDone()));
-			//taskTable.setText(i, 1, t.getContent());
-			//taskTable.setWidget(i, 2, new Button("Edit"));
 	    }
-
-	    
-	    
 	    
 	}
 

@@ -2,7 +2,9 @@ package ptm.client.note;
 
 import ptm.client.connection.Action;
 import ptm.client.datamodel.Note;
+import ptm.client.datamodel.ObjectListElement;
 
+import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -154,6 +156,7 @@ public class NoteDialog extends DialogBox {
 		setText(note.getTitle());
 		
 		//create action
+		// XXX find out why this action is not being add to action list.
 		Action action = new Action();
 		action.setActionType(Action.ActionType.NOTE_EDIT);
 		action.setObject(note);
@@ -164,6 +167,26 @@ public class NoteDialog extends DialogBox {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.DialogBox#endDragging(com.google.gwt.event.dom.client.MouseUpEvent)
+	 */
+	@Override
+	protected void endDragging(MouseUpEvent event) {
+		super.endDragging(event);
+		ObjectListElement e = noteManager.getApplicationManager().getSession().getAllNotes().get(noteManager.getApplicationManager().getSession().getNoteIndex(note.getId()));
+		if (e.getX() != getAbsoluteLeft() || e.getY() != getAbsoluteTop()){
+			e.setX(getPopupLeft());
+			e.setY(getPopupTop());
+			
+			Action action = new Action();
+			action.setActionType(Action.ActionType.NOTE_MOVE);
+			action.setObject(e);
+			
+			noteManager.getApplicationManager().getConnectionManager().addAction(action);
+		}
+		
+	}
+	
 	
 	/**
 	 * returns Id of the dialog Which is also id of the Note object that this dialog represents.
@@ -172,6 +195,7 @@ public class NoteDialog extends DialogBox {
 	public long getId(){
 		return note.getId();
 	}
+	
 	
 	//getters and setters
 	public Button getEditButton() {

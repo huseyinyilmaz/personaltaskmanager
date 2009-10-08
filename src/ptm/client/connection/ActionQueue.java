@@ -164,15 +164,17 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 				result = super.add(action);
 			break;
 		case NOTE_EDIT:
-
-			
-			if(action.getObjectId()>0){//object still has temporary id.do not need to add it again
+			/* Object still has temporary id. Do not need to add it again.
+			 * Create note action already has a reference to this object.
+			 * when we sand create action we will send latest version of this
+			 * object.
+			 * */
+			if(action.getObjectId()>0){
 				needNewAction = true;
 				for(Iterator<Action> itr = iterator();itr.hasNext();){
 					Action a=itr.next();
 					if( a.getObject() == action.getObject() && 
 						a.getActionType() == action.getActionType()){
-						
 						needNewAction = false;
 						break;//breaks for statement
 					}
@@ -183,7 +185,22 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 			}
 			break;
 			
-//XXX note create edit delete kisimlarini check et.
+		case NOTE_MOVE:
+			needNewAction = true;
+			for(Iterator<Action> itr = iterator();itr.hasNext();){
+				Action a=itr.next();
+				if( a.getActionType() == action.getActionType() &&
+					a.getObject() == action.getObject()){
+					//we already have a reference to this object.
+					needNewAction = false;
+					break;//breaks for statement
+				}
+			}//for
+			
+			if(needNewAction)
+				result = super.add(action);
+		break;
+
 			
 		default:
 			//for the rest of the actions just add new action.

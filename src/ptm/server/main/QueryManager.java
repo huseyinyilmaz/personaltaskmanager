@@ -296,4 +296,36 @@ public class QueryManager {
 		return object;
 	}
 
+	public static void moveNote(ptm.client.datamodel.ObjectListElement element) throws PersistanceManagerException{
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Note note = pm.getObjectById(Note.class,element.getId());
+		note.setX(element.getX());
+		note.setY(element.getY());
+
+		try {
+        	pm.makePersistent(note);
+        }catch(Exception e){
+        	PersistanceManagerException newE = new PersistanceManagerException("Error while saving note [" + element.getName() + "]location data",e);
+        	throw newE;
+        } finally {
+            pm.close();
+        }
+	
+	}
+	public static void editNote(ptm.client.datamodel.Note clientObject) throws PersistanceManagerException{
+    	PersistenceManager pm = PMF.get().getPersistenceManager();
+    	Note object = pm.getObjectById(Note.class,clientObject.getId());
+    	object.setTitle(clientObject.getTitle());
+    	object.setContent(new Text(clientObject.getContent()) );
+    	try {
+    		pm.makePersistent(object);
+    	}catch(Exception e){
+    		PersistanceManagerException newE = new PersistanceManagerException("Note [" + object.getTitle() + "] could not be Deleted",e);
+    		throw newE;
+    	} finally {
+    		pm.close();
+    	}
+    }
+
 }

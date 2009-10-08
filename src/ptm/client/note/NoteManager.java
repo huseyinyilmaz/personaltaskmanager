@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import ptm.client.connection.Action;
 import ptm.client.datamodel.Note;
 import ptm.client.datamodel.ObjectListElement;
+import ptm.client.datamodel.ToDoList;
 import ptm.client.main.ApplicationManager;
 import ptm.client.main.EventManager;
+import ptm.client.todolist.ToDoListDialog;
 
 
 import com.google.gwt.user.client.Window;
@@ -47,8 +49,33 @@ public class NoteManager {
 	 * this method is invoked when open button on tool-bar is pressed.
 	 */
 	public void openPressed (){
-		Window.alert("openPressed");
+		int index = applicationManager.getToolbarManager().getNoteListBox().getSelectedIndex();
+		long id = Long.parseLong(applicationManager.getToolbarManager().getNoteListBox().getValue(index));
+	
+		Action action = new Action();
+		action.setActionType(Action.ActionType.NOTE_OPEN);
+		action.setObjectId(id);
+		applicationManager.getConnectionManager().addAction(action);
+
+		//we force system to sync action to get our list as soon as possible
+		applicationManager.getConnectionManager().sync();	
 	}
+	
+	/**
+	 * This method is called after open_note respond comes back from server.
+	 * it creates a new dialog with note that came from server and shows it
+	 * on the page.
+	 * @param note note that came back from server.
+	 */
+	public void postOpen(Note note){
+		NoteDialog dialog = new NoteDialog(note, this);
+		ObjectListElement e = getApplicationManager().getSession().getNote(note.getId());
+		dialog.setPopupPosition(e.getX(), e.getY());
+		noteDialogList.add(dialog);
+		dialog.show();
+	}
+
+	
 
 	/**
 	 * this method is invoked when create button on tool-bar is pressed.

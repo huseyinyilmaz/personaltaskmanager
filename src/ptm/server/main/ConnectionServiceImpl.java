@@ -84,12 +84,14 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 						oid = newIds.get(oid);
 					result.setToDo(QueryManager.openToDo(oid).toClientObject());
 					break;
+				/*
 				case TODO_GET:	
 					oid =a.getObjectId();
 					if(oid<0)
 						oid = newIds.get(oid);
 					result.setToDo(QueryManager.getToDo(oid).toClientObject());
 					break;
+				*/
 				case TODO_CLOSE:
 					oid =a.getObjectId();
 					if(oid<0)
@@ -139,6 +141,15 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 					if(oid<0)
 						oid = newIds.get(oid);
 					result.setNote(QueryManager.openNote(oid).toClientObject());
+					break;
+				case NOTE_MOVE:
+					oid =((ObjectListElement)a.getObject()).getId();
+					if(oid<0)
+						((ObjectListElement)a.getObject()).setId(newIds.get(oid));
+					QueryManager.moveNote((ObjectListElement)a.getObject());
+					break;
+				case NOTE_EDIT:
+					QueryManager.editNote((ptm.client.datamodel.Note)a.getObject());
 					break;
 
 				}//switch

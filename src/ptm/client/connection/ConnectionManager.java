@@ -135,8 +135,6 @@ public class ConnectionManager {
 						case TODO_OPEN:
 							applicationManager.getTodoListManager().postOpen(result.getToDo());
 							break;
-						case TODO_GET:
-							break;
 						case TASK_CREATE:
 							toDoId =action.getObjectId();
 							if(toDoId<0)
@@ -151,6 +149,9 @@ public class ConnectionManager {
 							break;
 						case NOTE_CREATE:
 							applicationManager.getNoteManager().postCreate((Note)action.getObject(),result.getNote().getId());
+							break;
+						case NOTE_OPEN:
+							applicationManager.getNoteManager().postOpen(result.getNote());
 							break;
 						}//switch
 					}//if
