@@ -62,7 +62,6 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 			result.setActionId(a.getActionId());
 			try{
 				switch (a.getActionType()){
-				//TODO actions
 				case TODO_CREATE:
 					result.setToDo(QueryManager.createToDo((ptm.client.datamodel.ToDoList)a.getObject(),currentUser).toClientObject());
 					newIds.put(((ptm.client.datamodel.ToDoList)a.getObject()).getId(), result.getToDo().getId());
@@ -131,7 +130,7 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 					newIds.put(((ptm.client.datamodel.Note)a.getObject()).getId(), result.getNote().getId());
 					break;
 				case NOTE_DELETE:
-					QueryManager.deleteNote(((ptm.client.datamodel.Note)a.getObject()).getId());
+					QueryManager.deleteNote(a.getObjectId());
 					break;
 				case NOTE_CLOSE:
 					QueryManager.closeNote(a.getObjectId());

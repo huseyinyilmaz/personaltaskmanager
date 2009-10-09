@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import ptm.client.connection.Action;
 import ptm.client.datamodel.Note;
 import ptm.client.datamodel.ObjectListElement;
-import ptm.client.datamodel.ToDoList;
 import ptm.client.main.ApplicationManager;
 import ptm.client.main.EventManager;
-import ptm.client.todolist.ToDoListDialog;
-
 
 import com.google.gwt.user.client.Window;
 

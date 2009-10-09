@@ -153,7 +153,7 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 				Action a= itr.next();
 				if(	(a.getActionType() == Action.ActionType.NOTE_CREATE ||
 					 a.getActionType() == Action.ActionType.NOTE_EDIT )
-				&&	a.getObject() == action.getObject()
+				&&	((Note)a.getObject()).getId() == action.getObjectId()
 				){
 					itr.remove();
 				}
@@ -169,7 +169,7 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 			 * when we sand create action we will send latest version of this
 			 * object.
 			 * */
-			if(action.getObjectId()>0){
+			if( ((Note) action.getObject()).getId()>0){
 				needNewAction = true;
 				for(Iterator<Action> itr = iterator();itr.hasNext();){
 					Action a=itr.next();

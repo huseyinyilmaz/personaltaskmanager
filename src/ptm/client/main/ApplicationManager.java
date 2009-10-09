@@ -68,6 +68,16 @@ public class ApplicationManager {
 				getConnectionManager().addAction(action);
 			}
 		}
+		//Retrieve opened note
+		for ( ObjectListElement e : session.getAllNotes() ){
+			if(e.isOpen()){
+				action = new Action();
+				action.setActionType(Action.ActionType.NOTE_OPEN);
+				action.setObjectId(e.getId());
+				getConnectionManager().addAction(action);
+			}
+		}
+		
 		getConnectionManager().sync();
 		
 	}

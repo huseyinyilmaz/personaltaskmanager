@@ -148,15 +148,35 @@ public class NoteDialog extends DialogBox {
 	 * This button is on edit panel.
 	 */
 	public void okPressed(){
-		note.setTitle(titleTextBox.getText());
+		String newTitle = titleTextBox.getText();
+		note.setTitle(newTitle);
 		note.setContent(noteTextArea.getHTML());
 		
 		//update view mode
 		viewNote.setHTML(note.getContent());
 		setText(note.getTitle());
+		//update Session
+		//if title of note was changed update toolbar and session.
+		if (note.getTitle() != newTitle ){
+			int oldNoteIndex = noteManager.getApplicationManager().getSession().getNoteIndex(note.getId());
+			ObjectListElement noteElement = noteManager.getApplicationManager().getSession().getNote(note.getId());
+			noteElement.setName(newTitle);
+			noteManager.getApplicationManager().getSession().sortNote();
+			int newNoteIndex = noteManager.getApplicationManager().getSession().getNoteIndex(note.getId());
+			//if index of note was changed delete refresh toolbar
+			if( oldNoteIndex==newNoteIndex)
+				noteManager.getApplicationManager().getToolbarManager().getNoteListBox().setItemText(oldNoteIndex, newTitle);
+			else{
+				noteManager.getApplicationManager().getToolbarManager().getNoteListBox().removeItem(oldNoteIndex);
+				noteManager.getApplicationManager().getToolbarManager().getNoteListBox().insertItem(newTitle, Long.toString(note.getId()), newNoteIndex);
+				noteManager.getApplicationManager().getToolbarManager().getNoteListBox().setSelectedIndex(newNoteIndex);
+			}
+			
+			
+		}
+		
 		
 		//create action
-		// XXX find out why this action is not being add to action list.
 		Action action = new Action();
 		action.setActionType(Action.ActionType.NOTE_EDIT);
 		action.setObject(note);
