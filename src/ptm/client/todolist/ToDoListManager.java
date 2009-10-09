@@ -167,6 +167,7 @@ public class ToDoListManager {
 			ObjectListElement todoElement = getApplicationManager().getSession().getToDo(toDoListDialog.getId());
 			if (todoElement.isOpen()){
 				toDoListDialog.closePressed();
+				//XXX findout why this is note closeing the dialog.
 			}
 			applicationManager.getSession().removeToDo(id);
 		}
