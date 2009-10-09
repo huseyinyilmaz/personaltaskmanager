@@ -119,11 +119,7 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 					// we do not need to add a new action in this case.
 					if( a.getActionType() == Action.ActionType.TASK_CREATE &&
 						(Task)a.getObject() == (Task)action.getObject()){
-						
-						((Task)a.getObject()).setContent( ((Task)action.getObject()).getContent() );
-						((Task)a.getObject()).setDueDate(((Task)action.getObject()).getDueDate() );
-						((Task)a.getObject()).setIsDone(((Task)action.getObject()).getIsDone() );
-						
+						//we dont have to do anything here we already have reference on list.
 						break;//breaks for statement
 					}
 				}//for
@@ -133,16 +129,11 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 					Action a=itr.next();
 					if( a.getObject() == action.getObject() && 
 						a.getActionType() == action.getActionType()){
-						
-						((Task)a.getObject()).setContent( ((Task)action.getObject()).getContent() );
-						((Task)a.getObject()).setDueDate(((Task)action.getObject()).getDueDate() );
-						((Task)a.getObject()).setIsDone(((Task)action.getObject()).getIsDone() );
-
+						//we already have this object reference
 						needNewAction = false;
 						break;//breaks for statement
 					}
 				}//while
-				
 				if(needNewAction)
 					result = super.add(action);
 			}

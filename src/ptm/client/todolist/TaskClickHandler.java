@@ -45,6 +45,7 @@ public class TaskClickHandler implements ClickHandler {
 				Collections.sort(toDoListDialog.getToDolist().getList());
 				int newLoc = toDoListDialog.getToDolist().getList().indexOf(task);
 				if ( newLoc!=i ){
+					toDoListDialog.setCurrentRow(-1);
 					toDoListDialog.getTaskTable().removeRow(i);
 					toDoListDialog.addTaskTableRow(newLoc, task);
 				}
@@ -52,7 +53,7 @@ public class TaskClickHandler implements ClickHandler {
 				Action action = new Action();
 				action.setActionType(Action.ActionType.TASK_EDIT);
 				action.setObjectId(toDoListDialog.getId());
-				action.setObject(toDoListDialog.getToDolist().getList().get(i));
+				action.setObject(task);
 				
 				toDoListDialog.getToDoListManager().getApplicationManager().getConnectionManager().addAction(action);
 				break;//for
