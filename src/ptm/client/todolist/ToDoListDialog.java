@@ -41,7 +41,7 @@ public class ToDoListDialog extends DialogBox {
 	private VerticalPanel infoPanel= new VerticalPanel();
 	private RichTextArea textArea = new RichTextArea();
 	private DateBox  dateBox= new DateBox();
-	private CheckBox checkBox= new CheckBox("Task Complated");
+	private CheckBox checkBox= new CheckBox("Task Completed");
 	private Button okButton = new Button("OK");
 	private Button cancelButton = new Button("Cancel");
 	
