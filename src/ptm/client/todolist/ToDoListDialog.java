@@ -376,6 +376,7 @@ public class ToDoListDialog extends DialogBox {
 		this.currentRow = currentRow;
 	}
 	
+	
 	/**
 	 * Adds a new row to given row index of task table with the given task values
 	 * @param rowIndex index of row that needs to be added
@@ -385,6 +386,8 @@ public class ToDoListDialog extends DialogBox {
 		CheckBox checkBox = new CheckBox();
 		checkBox.setValue(task.getIsDone());
 		checkBox.addClickHandler(taskClickHandler);
+		//clear currentrow first
+		setCurrentRow(-1);
 		taskTable.insertRow(rowIndex);
 		taskTable.setWidget(rowIndex, 0,checkBox);
 		taskTable.setHTML(rowIndex, 1, task.getContent());
