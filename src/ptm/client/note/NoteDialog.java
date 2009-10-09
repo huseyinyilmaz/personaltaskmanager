@@ -141,6 +141,8 @@ public class NoteDialog extends DialogBox {
 		
 		setVisible(false);
 		noteManager.getNoteDialogList().remove(this);
+		//update session
+		noteManager.getApplicationManager().getSession().getNote(note.getId()).setOpen(false);
 	}
 	
 	/**

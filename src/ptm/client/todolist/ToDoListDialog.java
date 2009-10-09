@@ -140,13 +140,7 @@ public class ToDoListDialog extends DialogBox {
 	    
 	    infoPanel.add(tempPanel);
 	    infoPanel.setCellHorizontalAlignment(tempPanel,VerticalPanel.ALIGN_CENTER);
-	    //List
-	    /*
-	    table.setText(0, 0, "Symbol");
-	    table.setText(0, 1, "Price");
-	    table.setText(0, 2, "Change");
-	    table.setText(0, 3, "Remove");
-	    */
+
 	    taskTable.setCellPadding(6);
 	    
 	    //set centerPanel
@@ -257,7 +251,6 @@ public class ToDoListDialog extends DialogBox {
 			action.setObject(task);
 			action.setActionType(Action.ActionType.TASK_DELETE);
 			toDoListManager.getApplicationManager().getConnectionManager().addAction(action);
-			
 			//reset Current row
 			setCurrentRow(-1);
 		}
@@ -286,7 +279,9 @@ public class ToDoListDialog extends DialogBox {
 		
 		this.hide();
 		toDoListManager.getToDoListDialogs().remove(this);
-
+		
+		//update session
+		toDoListManager.getApplicationManager().getSession().getToDo(toDoList.getId()).setOpen(false);
 	}
 	
 	

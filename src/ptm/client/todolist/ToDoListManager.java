@@ -163,6 +163,11 @@ public class ToDoListManager {
 			applicationManager.getConnectionManager().addAction(action);
 			//delete from client
 			applicationManager.getToolbarManager().getTodoListBox().removeItem(index);
+			ToDoListDialog toDoListDialog =getDialog(id);
+			ObjectListElement todoElement = getApplicationManager().getSession().getToDo(toDoListDialog.getId());
+			if (todoElement.isOpen()){
+				toDoListDialog.closePressed();
+			}
 			applicationManager.getSession().removeToDo(id);
 		}
 	}
