@@ -79,6 +79,7 @@ public class ToDoListManager {
 			e.setName(name);
 			e.setX(dialog.getPopupLeft());
 			e.setY(dialog.getPopupTop());
+			e.setOpen(true);
 			int itemLocation = applicationManager.getSession().placeToDo(e);
 			applicationManager.getToolbarManager().getTodoListBox().insertItem(name,Long.toString(tempId),itemLocation);
 			
@@ -165,9 +166,10 @@ public class ToDoListManager {
 			applicationManager.getToolbarManager().getTodoListBox().removeItem(index);
 			ToDoListDialog toDoListDialog =getDialog(id);
 			ObjectListElement todoElement = getApplicationManager().getSession().getToDo(toDoListDialog.getId());
+			//if it is open remove it.
 			if (todoElement.isOpen()){
-				toDoListDialog.closePressed();
-				//XXX findout why this is note closeing the dialog.
+				toDoListDialog.hide();
+				getToDoListDialogs().remove(toDoListDialog);
 			}
 			applicationManager.getSession().removeToDo(id);
 		}

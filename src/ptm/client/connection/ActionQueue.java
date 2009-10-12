@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import ptm.client.datamodel.Note;
+import ptm.client.datamodel.ObjectListElement;
 import ptm.client.datamodel.Task;
 import ptm.client.datamodel.ToDoList;
 
@@ -37,7 +38,10 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 				Action a= itr.next();
 				if(	(a.getObjectId() == action.getObjectId()) ||
 					(a.getActionType() == Action.ActionType.TODO_CREATE &&//Create todo sends object to server
-					 action.getObjectId() == ((ToDoList) a.getObject()).getId()) ){
+					 action.getObjectId() == ((ToDoList) a.getObject()).getId())||
+					(a.getActionType() == Action.ActionType.TODO_MOVE &&//mote todo sends todolist element to server
+					 action.getObjectId() == ((ObjectListElement) a.getObject()).getId()) 
+				   ){
 					itr.remove();
 				}
 				
@@ -142,9 +146,12 @@ public class ActionQueue extends LinkedList<Action> implements Serializable {
 			//remove other actions on this note.
 			for (Iterator<Action> itr = iterator();itr.hasNext();){
 				Action a= itr.next();
-				if(	(a.getActionType() == Action.ActionType.NOTE_CREATE ||
+				if(	(((a.getActionType() == Action.ActionType.NOTE_CREATE ||
 					 a.getActionType() == Action.ActionType.NOTE_EDIT )
-				&&	((Note)a.getObject()).getId() == action.getObjectId()
+				  &&((Note)a.getObject()).getId() == action.getObjectId()))
+				||  (a.getActionType() == Action.ActionType.NOTE_MOVE
+				  && action.getObjectId() == ((ObjectListElement) a.getObject()).getId())
+				|| (a.getObjectId() == action.getObjectId())//NOTE CLOSE HAS THAT
 				){
 					itr.remove();
 				}

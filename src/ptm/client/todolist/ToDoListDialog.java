@@ -266,10 +266,11 @@ public class ToDoListDialog extends DialogBox {
 		/* if dialog is closed in create mode, we have to
 		 * remove task information.
 		 */
-		if (task != null && !isInEditMode/*in create mode*/){
+		/*if (task != null && !isInEditMode/*in create mode* /){
 			toDoList.removeElement(task);
 			task = null;
-		}
+		}*/
+		cancelPressed();
 		
 		Action action = new Action();
 		action.setActionType(Action.ActionType.TODO_CLOSE);

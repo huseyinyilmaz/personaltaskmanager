@@ -7,6 +7,7 @@ import ptm.client.datamodel.Note;
 import ptm.client.datamodel.ObjectListElement;
 import ptm.client.main.ApplicationManager;
 import ptm.client.main.EventManager;
+import ptm.client.todolist.ToDoListDialog;
 
 import com.google.gwt.user.client.Window;
 
@@ -87,7 +88,7 @@ public class NoteManager {
 		n.setTitle(name);
 		n.setContent(content);
 		n.setId(tempId);
-
+		
 		NoteDialog d = new NoteDialog(n, this);
 		noteDialogList.add(d);
 		
@@ -106,6 +107,7 @@ public class NoteManager {
 		e.setName(name);
 		e.setX(d.getPopupLeft());
 		e.setY(d.getPopupTop());
+		e.setOpen(true);
 		int itemLocation = applicationManager.getSession().placeNote(e);
 		applicationManager.getToolbarManager().getNoteListBox().insertItem(name,Long.toString(tempId),itemLocation);
 
@@ -143,6 +145,17 @@ public class NoteManager {
 			applicationManager.getToolbarManager().getNoteListBox().removeItem(index);
 			applicationManager.getSession().removeNote(id);
 			//TODO if note is open on screen close dialog. Remove Item from dialoglist in application manager. Do this for to-do List too.
+			
+			
+			NoteDialog noteDialog =getDialog(id);
+			ObjectListElement noteElement = getApplicationManager().getSession().getNote(noteDialog.getId());
+			//XXX why note element is null
+			//if it is open remove it.
+			if (noteElement.isOpen()){
+				noteDialog.hide();
+				getNoteDialogList().remove(noteDialog);
+			}
+			
 		}
 	}
 
