@@ -143,19 +143,17 @@ public class NoteManager {
 			applicationManager.getConnectionManager().addAction(action);
 			//delete from client
 			applicationManager.getToolbarManager().getNoteListBox().removeItem(index);
-			applicationManager.getSession().removeNote(id);
 			//TODO if note is open on screen close dialog. Remove Item from dialoglist in application manager. Do this for to-do List too.
 			
 			
 			NoteDialog noteDialog =getDialog(id);
 			ObjectListElement noteElement = getApplicationManager().getSession().getNote(noteDialog.getId());
-			//XXX why note element is null
 			//if it is open remove it.
 			if (noteElement.isOpen()){
 				noteDialog.hide();
 				getNoteDialogList().remove(noteDialog);
 			}
-			
+			applicationManager.getSession().removeNote(id);
 		}
 	}
 

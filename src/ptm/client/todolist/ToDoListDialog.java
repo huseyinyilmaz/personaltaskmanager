@@ -391,6 +391,21 @@ public class ToDoListDialog extends DialogBox {
 	}
 	
 	/**
+	 * check if there is a selected task if there is not it disables edit and delete task buttons.
+	 */
+	//XXX bu methodu uygun yerlerde kullan
+	public void evaluateButtonStatus(){
+		boolean editButtonEnable = false;
+		boolean deleteButtonEnable = false;
+		if(currentRow != -1){
+			editButtonEnable = true;
+			deleteButtonEnable = true;
+		}
+		editButton.setEnabled(editButtonEnable);
+		deleteButton.setEnabled(deleteButtonEnable);
+	}
+	
+	/**
 	 * Sets given given task values to given row of task table.
 	 * @param rowIndex index of row that needs to be changed
 	 * @param task Task that is represented by given table row.
@@ -452,4 +467,5 @@ public class ToDoListDialog extends DialogBox {
 		return toDoListManager;
 	}
 	
+
 }

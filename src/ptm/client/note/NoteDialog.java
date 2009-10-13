@@ -151,12 +151,8 @@ public class NoteDialog extends DialogBox {
 	 */
 	public void okPressed(){
 		String newTitle = titleTextBox.getText();
-		note.setTitle(newTitle);
-		note.setContent(noteTextArea.getHTML());
-		
 		//update view mode
 		viewNote.setHTML(note.getContent());
-		setText(note.getTitle());
 		//update Session
 		//if title of note was changed update toolbar and session.
 		if (note.getTitle() != newTitle ){
@@ -174,10 +170,11 @@ public class NoteDialog extends DialogBox {
 				noteManager.getApplicationManager().getToolbarManager().getNoteListBox().setSelectedIndex(newNoteIndex);
 			}
 			
-			
 		}
 		
-		
+		note.setTitle(newTitle);
+		note.setContent(noteTextArea.getHTML());
+		setText(note.getTitle());	
 		//create action
 		Action action = new Action();
 		action.setActionType(Action.ActionType.NOTE_EDIT);

@@ -133,7 +133,10 @@ public class ConnectionServiceImpl extends RemoteServiceServlet implements Conne
 					QueryManager.deleteNote(a.getObjectId());
 					break;
 				case NOTE_CLOSE:
-					QueryManager.closeNote(a.getObjectId());
+					oid =a.getObjectId();
+					if(oid<0)
+						oid = newIds.get(oid);
+					QueryManager.closeNote(oid);
 					break;
 				case NOTE_OPEN:
 					oid =a.getObjectId();
