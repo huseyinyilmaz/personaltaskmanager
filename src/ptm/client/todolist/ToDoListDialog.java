@@ -161,7 +161,7 @@ public class ToDoListDialog extends DialogBox {
 	    for (int i=0;i<toDoList.getList().size();i++){
 	    	addTaskTableRow(i, toDoList.getList().get(i));
 	    }
-	    
+	    evaluateButtonStatus();
 	}
 
 	
@@ -253,6 +253,7 @@ public class ToDoListDialog extends DialogBox {
 			toDoListManager.getApplicationManager().getConnectionManager().addAction(action);
 			//reset Current row
 			setCurrentRow(-1);
+			evaluateButtonStatus();
 		}
 	
 	}
@@ -329,6 +330,7 @@ public class ToDoListDialog extends DialogBox {
 		
 		//open list mode
 		mainPanel.showWidget(Panels.listPanel.ordinal());
+		evaluateButtonStatus();
 	}
 	
 	

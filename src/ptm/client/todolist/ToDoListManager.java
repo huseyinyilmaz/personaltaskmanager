@@ -88,8 +88,8 @@ public class ToDoListManager {
 			action.setObject(e);
 			
 			applicationManager.getConnectionManager().addAction(action);
-			
 		}
+		applicationManager.getToolbarManager().evaluateToDoButtonStatus();
 	}
 
 	/**
@@ -145,6 +145,7 @@ public class ToDoListManager {
 				toDoListDialog.setName(newName);
 			}
 		}
+		applicationManager.getToolbarManager().evaluateToDoButtonStatus();
 	}//edit()
 
 	/**
@@ -173,6 +174,7 @@ public class ToDoListManager {
 			}
 			applicationManager.getSession().removeToDo(id);
 		}
+		applicationManager.getToolbarManager().evaluateToDoButtonStatus();
 	}
 
 	/**

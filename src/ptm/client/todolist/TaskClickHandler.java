@@ -56,9 +56,11 @@ public class TaskClickHandler implements ClickHandler {
 				action.setObject(task);
 				
 				toDoListDialog.getToDoListManager().getApplicationManager().getConnectionManager().addAction(action);
+				toDoListDialog.evaluateButtonStatus();
 				break;//for
 			}
 		}
+		
 	}
 
 }

@@ -3,6 +3,8 @@ package ptm.client.main;
 import ptm.client.datamodel.ObjectListElement;
 import ptm.client.datamodel.Session;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.ListBox;
@@ -69,7 +71,18 @@ public class ToolbarManager {
 		editTodoButton.addClickHandler(applicationManager.getEventManager());
 		deleteTodoButton.addClickHandler(applicationManager.getEventManager());
 		openTodoButton.addClickHandler(applicationManager.getEventManager());
-		
+		ChangeHandler handler = new ChangeHandler(){
+			public void onChange(ChangeEvent event){
+				evaluateToDoButtonStatus();
+			}
+		};
+		todoListBox.addChangeHandler(handler);
+		handler = new ChangeHandler(){
+			public void onChange(ChangeEvent event){
+				evaluateNoteButtonStatus();
+			}
+		};
+		todoListBox.addChangeHandler(handler);
 		
 		
 		//initialize notePanel
@@ -126,7 +139,47 @@ public class ToolbarManager {
 		//Place note names in list box
 		for (ObjectListElement e: session.getAllNotes())
 			getNoteListBox().addItem(e.getName(), Long.toString(e.getId()));
+		evaluateToDoButtonStatus();
 	}
+	
+	/**
+	 * Enables or disables buttons in order the status of application.
+	 */
+	public void evaluateToDoButtonStatus(){
+		int index = todoListBox.getSelectedIndex();
+		int count = todoListBox.getItemCount();
+		boolean isOpenEnabled = false;
+		boolean isEditEnabled = false;
+		boolean isDeleteEnabled = false;
+		if (index != -1){
+			isEditEnabled = true;
+			isDeleteEnabled = true;
+		}
+		if (count>0)
+			isOpenEnabled = true;
+		
+		openTodoButton.setEnabled(isOpenEnabled);
+		editTodoButton.setEnabled(isEditEnabled);
+		deleteTodoButton.setEnabled(isDeleteEnabled);
+	}
+
+	/**
+	 * Enables or disables buttons in order the status of application.
+	 */
+	public void evaluateNoteButtonStatus(){
+		int index = noteListBox.getSelectedIndex();
+		int count = noteListBox.getItemCount();
+		boolean isOpenEnabled = false;
+		boolean isDeleteEnabled = false;
+		if (index != -1)
+			isDeleteEnabled = true;
+		if (count>0)
+			isOpenEnabled = true;
+		
+		openNoteButton.setEnabled(isOpenEnabled);
+		deleteNoteButton.setEnabled(isDeleteEnabled);
+	}
+	
 	
 	//setters and getters
 	public VerticalPanel getToolBar(){
