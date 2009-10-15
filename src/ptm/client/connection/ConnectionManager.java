@@ -92,6 +92,9 @@ public class ConnectionManager {
 	 * Sends action list to server and process result list.
 	 */
 	public void sync(){
+		//disable sync button
+		applicationManager.getToolbarManager().setSyncStatus(true);
+		
 		// Set up the callback object.
 		AsyncCallback<Queue<Result>> callback = new AsyncCallback<Queue<Result>>() {
 			@Override
@@ -107,8 +110,7 @@ public class ConnectionManager {
 					Window.alert("Error while trying to Sync your Changes.\n"+
 							     "We will try again later.\n"+
 							     "Exception :\n"+caught.getMessage());
-			
-			
+				applicationManager.getToolbarManager().setSyncStatus(false);
 			}
 
 			@Override
@@ -156,6 +158,7 @@ public class ConnectionManager {
 						}//switch
 					}//if
 				}//for
+				applicationManager.getToolbarManager().setSyncStatus(false);
 				
 			}
 		};

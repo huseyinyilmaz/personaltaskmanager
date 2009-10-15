@@ -165,10 +165,10 @@ public class ToDoListManager {
 			applicationManager.getConnectionManager().addAction(action);
 			//delete from client
 			applicationManager.getToolbarManager().getTodoListBox().removeItem(index);
-			ToDoListDialog toDoListDialog =getDialog(id);
-			ObjectListElement todoElement = getApplicationManager().getSession().getToDo(toDoListDialog.getId());
+			ObjectListElement todoElement = getApplicationManager().getSession().getToDo(id);
 			//if it is open remove it.
 			if (todoElement.isOpen()){
+				ToDoListDialog toDoListDialog =getDialog(id);
 				toDoListDialog.hide();
 				getToDoListDialogs().remove(toDoListDialog);
 			}

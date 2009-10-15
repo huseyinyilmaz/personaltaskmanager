@@ -1,8 +1,8 @@
-<!-- Indices written at Wed, 14 Oct 2009 09:26:21 UTC -->
+<!-- Indices written at Thu, 15 Oct 2009 06:53:42 UTC -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="Task" ancestor="true" source="auto">
         <property name="list_INTEGER_IDX" direction="asc"/>
     </datastore-index>

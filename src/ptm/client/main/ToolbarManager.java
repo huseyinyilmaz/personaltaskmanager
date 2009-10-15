@@ -5,6 +5,7 @@ import ptm.client.datamodel.Session;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.ListBox;
@@ -82,7 +83,7 @@ public class ToolbarManager {
 				evaluateNoteButtonStatus();
 			}
 		};
-		todoListBox.addChangeHandler(handler);
+		noteListBox.addChangeHandler(handler);
 		
 		
 		//initialize notePanel
@@ -140,6 +141,8 @@ public class ToolbarManager {
 		for (ObjectListElement e: session.getAllNotes())
 			getNoteListBox().addItem(e.getName(), Long.toString(e.getId()));
 		evaluateToDoButtonStatus();
+		evaluateNoteButtonStatus();
+
 	}
 	
 	/**
@@ -147,17 +150,14 @@ public class ToolbarManager {
 	 */
 	public void evaluateToDoButtonStatus(){
 		int index = todoListBox.getSelectedIndex();
-		int count = todoListBox.getItemCount();
 		boolean isOpenEnabled = false;
 		boolean isEditEnabled = false;
 		boolean isDeleteEnabled = false;
 		if (index != -1){
 			isEditEnabled = true;
 			isDeleteEnabled = true;
-		}
-		if (count>0)
 			isOpenEnabled = true;
-		
+		}
 		openTodoButton.setEnabled(isOpenEnabled);
 		editTodoButton.setEnabled(isEditEnabled);
 		deleteTodoButton.setEnabled(isDeleteEnabled);
@@ -168,19 +168,28 @@ public class ToolbarManager {
 	 */
 	public void evaluateNoteButtonStatus(){
 		int index = noteListBox.getSelectedIndex();
-		int count = noteListBox.getItemCount();
 		boolean isOpenEnabled = false;
 		boolean isDeleteEnabled = false;
-		if (index != -1)
+		if (index != -1){
 			isDeleteEnabled = true;
-		if (count>0)
 			isOpenEnabled = true;
-		
+		}
+
 		openNoteButton.setEnabled(isOpenEnabled);
 		deleteNoteButton.setEnabled(isDeleteEnabled);
 	}
 	
-	
+	/**
+	 * @param isSyncing 1
+	 */
+	public void setSyncStatus(boolean isSyncing){
+		generalSyncButton.setEnabled(!isSyncing);
+		if(isSyncing)
+			generalSyncButton.setText("Syncing...");
+		else
+			generalSyncButton.setText("Sync");
+		
+	}
 	//setters and getters
 	public VerticalPanel getToolBar(){
 		return toolBarPanel;
