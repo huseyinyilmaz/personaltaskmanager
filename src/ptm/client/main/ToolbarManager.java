@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.StackPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -44,7 +45,7 @@ public class ToolbarManager {
 	//private Button generalHideAllButton = new Button("Hide All");
 	private Button generalSyncButton = new Button("Sync");
 	private Button generalLogoutButton = new Button("Log out");
-	
+	private Label counterLabel = new Label();
 	
 	
 	//private Button createNoteButton = new Button("Create a new note");
@@ -106,8 +107,8 @@ public class ToolbarManager {
 		//initialize generalPanel
 
 		generalPanel.add(generalSyncButton);
-		generalPanel.add(generalLogoutButton);
-
+		//generalPanel.add(generalLogoutButton);
+		generalPanel.add(counterLabel);
 		generalSyncButton.addStyleName("toolbarGeneralButton");
 		generalLogoutButton.addStyleName("toolbarGeneralButton");
 		generalLogoutButton.addClickHandler(applicationManager.getEventManager());
@@ -129,6 +130,10 @@ public class ToolbarManager {
 		
 	}
 	
+	public Label getCounterLabel() {
+		return counterLabel;
+	}
+
 	/**
 	 * Starts session for tool bar. It fills list boxes.
 	 */

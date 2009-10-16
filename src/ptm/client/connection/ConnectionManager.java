@@ -15,6 +15,7 @@ import ptm.client.todolist.ToDoListDialog;
 
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -28,7 +29,43 @@ public class ConnectionManager {
 	private ActionQueue actionQueue = new ActionQueue();
 	private ConnectionServiceAsync connectionService = GWT.create(ConnectionService.class);
 	private ApplicationManager applicationManager;
-	
+	private class SyncTimer extends Timer {
+		private boolean isCounting=false;
+		private final int second = 1000;
+		private final int minute = 60;
+		private final int interval = 5 * minute ;
+		private int count = 0;
+		public void start(){
+			if (!isCounting){
+				count = interval;
+				this.scheduleRepeating(second);
+				isCounting = true;
+			}
+		}
+		
+		public void cancel(){
+			if(isCounting){
+				isCounting = false;
+				super.cancel();
+			}
+		}
+		
+		@Override
+		public void run() {
+			if (count>0){
+				//applicationManager.getToolbarManager().getCounterLabel().setText(Integer.toString(count--));
+				applicationManager.getToolbarManager().getGeneralSyncButton().setText("Syncing in "+ count-- + "sc.");
+			}else{
+				cancel();
+				isCounting = false;
+				sync();
+				//applicationManager.getToolbarManager().getCounterLabel().setText("");
+				//applicationManager.getToolbarManager().getGeneralSyncButton().setText("Sync");
+			}
+		}
+
+	}
+	SyncTimer timer = new SyncTimer();
 	public ConnectionManager(ApplicationManager applicationManager){
 		this.applicationManager = applicationManager;
 	}
@@ -40,6 +77,7 @@ public class ConnectionManager {
 	 */
 	public void addAction(Action action){
 		actionQueue.add(action);
+		timer.start();
 	}
 	
 	
@@ -92,6 +130,7 @@ public class ConnectionManager {
 	 * Sends action list to server and process result list.
 	 */
 	public void sync(){
+		timer.cancel();
 		//disable sync button
 		applicationManager.getToolbarManager().setSyncStatus(true);
 		

@@ -7,12 +7,19 @@ import ptm.client.datamodel.Session;
 import ptm.client.note.NoteManager;
 import ptm.client.todolist.ToDoListManager;
 
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DecoratorPanel;
+import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ApplicationManager {
 	private Session session;
-	private VerticalPanel mainPanel = new VerticalPanel();
+	private DockPanel mainPanel = new DockPanel();
 	private EventManager eventManager= new EventManager(this);
 	//initialize manager variables
 	private ToolbarManager toolbarManager=new ToolbarManager(this);
@@ -33,12 +40,29 @@ public class ApplicationManager {
 	//initialize Application.
 	public void initialize(){
 		//construct main panel
-		mainPanel.add(toolbarManager.getToolBar());
+		mainPanel.setWidth("100%");
+		mainPanel.add(toolbarManager.getToolBar(),DockPanel.WEST);
+		
+		DecoratorPanel dp = new DecoratorPanel();
+		dp.setWidget(toolbarManager.getGeneralLogoutButton());
+		dp.addStyleName("logoutGeneralButton");
+
+		
+		mainPanel.add(dp,DockPanel.EAST);
+		mainPanel.setCellHorizontalAlignment(dp, DockPanel.ALIGN_RIGHT);
+
 		// Associate the Main panel with the HTML host page.
 	    RootPanel.get().add(mainPanel);
 	    //get Session Info From server
 	    getConnectionManager().initializeSession();
-	    // TODO make sure that everything is disabled before we get initilization data.
+	    CloseHandler<Window> closeHandler = new CloseHandler<Window>(){
+			@Override
+			public void onClose(CloseEvent<Window> event) {
+				getConnectionManager().sync();
+			}
+	    };
+	    
+	    Window.addCloseHandler(closeHandler);
 	}
 
 	public long getNextTempOId(){

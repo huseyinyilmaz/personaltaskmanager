@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 
@@ -149,7 +150,10 @@ public class ToDoListDialog extends DialogBox {
 	    mainPanel.showWidget(Panels.listPanel.ordinal());
 	    //create main panel
 	    listPanel.setSize("400", "400");
-	    listPanel.add(taskTable,DockPanel.CENTER);
+	    ScrollPanel scrollPanel = new ScrollPanel();
+	    scrollPanel.setSize("400", "350");
+	    scrollPanel.add(taskTable);
+	    listPanel.add(scrollPanel,DockPanel.CENTER);
 	    listPanel.add(buttonPanel,DockPanel.SOUTH);
 	    listPanel.setCellHeight(buttonPanel, "30px");
 	    listPanel.setCellHorizontalAlignment(buttonPanel, DockPanel.ALIGN_CENTER);
