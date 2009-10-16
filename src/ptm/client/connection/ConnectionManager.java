@@ -146,10 +146,12 @@ public class ConnectionManager {
 					Window.alert("User on the server and client does not match.\nPlease login again.");
 					logout();
 				}else
+					/*
 					Window.alert("Error while trying to Sync your Changes.\n"+
 							     "We will try again later.\n"+
 							     "Exception :\n"+caught.getMessage());
-				applicationManager.getToolbarManager().setSyncStatus(false);
+					*/
+				timer.start();
 			}
 
 			@Override

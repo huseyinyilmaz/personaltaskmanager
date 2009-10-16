@@ -152,7 +152,7 @@ public class NoteDialog extends DialogBox {
 	public void okPressed(){
 		String newTitle = titleTextBox.getText();
 		//update view mode
-		viewNote.setHTML(note.getContent());
+		viewNote.setHTML(noteTextArea.getHTML());
 		//update Session
 		//if title of note was changed update toolbar and session.
 		if (note.getTitle() != newTitle ){

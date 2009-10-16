@@ -10,12 +10,9 @@ import ptm.client.todolist.ToDoListManager;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ApplicationManager {
 	private Session session;
@@ -58,11 +55,18 @@ public class ApplicationManager {
 	    CloseHandler<Window> closeHandler = new CloseHandler<Window>(){
 			@Override
 			public void onClose(CloseEvent<Window> event) {
-				getConnectionManager().sync();
+				try{
+					getConnectionManager().sync();
+				}catch(Exception e){
+					//do nothing
+				}
 			}
 	    };
 	    
 	    Window.addCloseHandler(closeHandler);
+	    
+	    getToolbarManager().evaluateToDoButtonStatus();
+	    getToolbarManager().evaluateNoteButtonStatus();
 	}
 
 	public long getNextTempOId(){
