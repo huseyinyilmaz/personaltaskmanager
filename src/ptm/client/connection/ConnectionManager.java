@@ -151,6 +151,7 @@ public class ConnectionManager {
 							     "We will try again later.\n"+
 							     "Exception :\n"+caught.getMessage());
 					*/
+				applicationManager.getToolbarManager().getGeneralSyncButton().setEnabled(true);
 				timer.start();
 			}
 

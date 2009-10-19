@@ -56,6 +56,7 @@ public class NoteManager {
 
 		//we force system to sync action to get our list as soon as possible
 		applicationManager.getConnectionManager().sync();
+		applicationManager.getToolbarManager().getOpenNoteButton().setEnabled(false);
 	}
 	
 	/**
@@ -70,6 +71,7 @@ public class NoteManager {
 		dialog.setPopupPosition(e.getX(), e.getY());
 		noteDialogList.add(dialog);
 		dialog.show();
+		applicationManager.getToolbarManager().evaluateNoteButtonStatus();
 	}
 
 	

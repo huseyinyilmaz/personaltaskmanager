@@ -288,6 +288,7 @@ public class ToDoListDialog extends DialogBox {
 		
 		//update session
 		toDoListManager.getApplicationManager().getSession().getToDo(toDoList.getId()).setOpen(false);
+		toDoListManager.getApplicationManager().getToolbarManager().evaluateToDoButtonStatus();
 	}
 	
 	

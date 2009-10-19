@@ -157,10 +157,12 @@ public class ToolbarManager {
 		boolean isOpenEnabled = false;
 		boolean isEditEnabled = false;
 		boolean isDeleteEnabled = false;
+		
 		if (index != -1){
+			if(!applicationManager.getSession().getAllToDoLists().get(index).isOpen())
+				isOpenEnabled = true;
 			isEditEnabled = true;
 			isDeleteEnabled = true;
-			isOpenEnabled = true;
 		}
 		openTodoButton.setEnabled(isOpenEnabled);
 		editTodoButton.setEnabled(isEditEnabled);
@@ -175,8 +177,9 @@ public class ToolbarManager {
 		boolean isOpenEnabled = false;
 		boolean isDeleteEnabled = false;
 		if (index != -1){
+			if(!applicationManager.getSession().getAllNotes().get(index).isOpen())
+				isOpenEnabled = true;
 			isDeleteEnabled = true;
-			isOpenEnabled = true;
 		}
 
 		openNoteButton.setEnabled(isOpenEnabled);

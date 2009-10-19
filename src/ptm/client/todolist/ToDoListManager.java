@@ -191,6 +191,7 @@ public class ToDoListManager {
 		applicationManager.getConnectionManager().addAction(action);
 		//we force system to sync action to get our list as soon as possible
 		applicationManager.getConnectionManager().sync();
+		applicationManager.getToolbarManager().getOpenTodoButton().setEnabled(false);
 	}
 	
 	
@@ -206,6 +207,7 @@ public class ToDoListManager {
 		dialog.setPopupPosition(e.getX(), e.getY());
 		toDoListDialogs.add(dialog);
 		dialog.show();
+		applicationManager.getToolbarManager().evaluateToDoButtonStatus();
 	}
 	
 	
