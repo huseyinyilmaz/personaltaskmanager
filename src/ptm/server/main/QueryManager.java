@@ -10,6 +10,7 @@ import ptm.server.datamodel.Note;
 import ptm.server.datamodel.PMF;
 import ptm.server.datamodel.Task;
 import ptm.server.datamodel.ToDoList;
+import sun.util.logging.resources.logging;
 
 
 import com.google.appengine.api.datastore.Text;
@@ -31,6 +32,7 @@ public class QueryManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public static ptm.client.datamodel.Session getSession(User user){
+		//applyTaskPatch();
 		//create return object
 		ptm.client.datamodel.Session session = new ptm.client.datamodel.Session(user.getEmail());
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -327,5 +329,27 @@ public class QueryManager {
     		pm.close();
     	}
     }
+	
+	@SuppressWarnings("unchecked")
+	public static void applyTaskPatch(){
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		//get Task Objects from server
+		Query query = pm.newQuery(Task.class);
+		List<Task> taskList = (List<Task>) query.execute();
+		try {
+		for(Task task: taskList){
+			if(task.getIsAlerOn()==null)
+				task.setIsAlerOn(false);
+			if(task.getAlertBefore()==null)
+				task.setAlertBefore(2);
+	    	//save task
+			
+	    		pm.makePersistent(task);
+	    	
+		}
+		} finally {
+    		pm.close();
+    	}
+	}
 
 }

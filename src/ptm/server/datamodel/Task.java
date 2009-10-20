@@ -32,6 +32,13 @@ public class Task {
 
     @Persistent
     private Date dueDate;
+
+    @Persistent
+    private Integer alertBefore;
+    
+	@Persistent
+    private Boolean isAlerOn;
+    
     
     @Persistent
     private Boolean isDone;
@@ -46,6 +53,8 @@ public class Task {
 		clientObject.setCheckedDate(this.getCheckedDate());
 		clientObject.setCreationDate(this.getCreationDate());
 		clientObject.setDueDate(this.getDueDate());
+		clientObject.setAlertBefore(this.alertBefore);
+		clientObject.setIsAlerOn(this.getIsAlerOn());
 		return clientObject;
 	}
 
@@ -67,6 +76,8 @@ public class Task {
 		setContent(clientObject.getContent());
 		setIsDone(clientObject.getIsDone());
 		setDueDate(clientObject.getDueDate());
+		setAlertBefore(clientObject.getAlertBefore());
+		setIsAlerOn(clientObject.getIsAlerOn());
 	}
 	
 	//Getter and setters
@@ -104,5 +115,18 @@ public class Task {
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
+    public Integer getAlertBefore() {
+		return alertBefore;
+	}
+	public void setAlertBefore(Integer alertBefore) {
+		this.alertBefore = alertBefore;
+	}
+	public Boolean getIsAlerOn() {
+		return isAlerOn;
+	}
+	public void setIsAlerOn(Boolean isAlerOn) {
+		this.isAlerOn = isAlerOn;
+	}
 
+	
 }

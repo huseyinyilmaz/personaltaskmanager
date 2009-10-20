@@ -14,7 +14,10 @@ public class Task implements Serializable,Comparable<Task> {
 	private Date dueDate;
 	private String content;
 	private Boolean isDone;
+    private Integer alertBefore;
+    private Boolean isAlerOn;
 
+	
 	//Constructors
 	public Task(long id, String content) {
 		this.id = id;
@@ -110,6 +113,18 @@ public class Task implements Serializable,Comparable<Task> {
 	}
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+	}
+	public int getAlertBefore() {
+		return alertBefore;
+	}
+	public void setAlertBefore(int alertBefore) {
+		this.alertBefore = alertBefore;
+	}
+	public boolean getIsAlerOn() {
+		return isAlerOn;
+	}
+	public void setIsAlerOn(boolean isAlerOn) {
+		this.isAlerOn = isAlerOn;
 	}
 
 	

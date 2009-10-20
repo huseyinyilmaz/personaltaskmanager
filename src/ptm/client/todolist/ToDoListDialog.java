@@ -14,10 +14,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -41,10 +43,14 @@ public class ToDoListDialog extends DialogBox {
 	// edit/create task widgets
 	private VerticalPanel infoPanel= new VerticalPanel();
 	private RichTextArea textArea = new RichTextArea();
-	private DateBox  dateBox= new DateBox();
-	private CheckBox checkBox= new CheckBox("Task Completed");
+	private CheckBox completedCheckBox= new CheckBox("Task Completed");
 	private Button okButton = new Button("OK");
 	private Button cancelButton = new Button("Cancel");
+	
+	//Alert widgets
+	private CheckBox alertCheckbox= new CheckBox("E-mail me about this task");
+	private ListBox askBeforeListbox = new ListBox();
+	private DateBox  dueDateDateBox= new DateBox();
 	
 	// manager that manages this todolist
 	private ToDoListManager toDoListManager;
@@ -110,26 +116,49 @@ public class ToDoListDialog extends DialogBox {
 	    
 	    
 	    //Create Edit Panel
-	    //dateBox.setStyleName("ToDoListDialog_dateBox");
+	    //dueDateDateBox.setStyleName("ToDoListDialog_dateBox");
 	    //textArea.setStyleName("ToDoListDialog_textArea");
 	    
-	    //create Temp panel for datebox
+	    //Alert disclosure panel
+	    DisclosurePanel alertPanel = new DisclosurePanel("E-mail Options");
+	    alertPanel.setAnimationEnabled(true);
+	    VerticalPanel verticalAlertPanel = new VerticalPanel();
+	    alertPanel.add(verticalAlertPanel);
+	    //email
+	    verticalAlertPanel.add(alertCheckbox);
+	    
+	    //duedate panel
 	    HorizontalPanel tempPanel = new HorizontalPanel();
 	    tempPanel.setSpacing(10);
 	    tempPanel.add(new Label("Due Date "));
-	    tempPanel.add(dateBox);
+	    tempPanel.add(dueDateDateBox);
+	    verticalAlertPanel.add(tempPanel);
+
+	    //alert before panel
+	    tempPanel = new HorizontalPanel();
+	    tempPanel.setSpacing(10);
+	    tempPanel.add(new Label("Alert me "));
+	    tempPanel.add(askBeforeListbox);
+	    askBeforeListbox.addItem("same day", "0");
+	    askBeforeListbox.addItem("1 day before", "1");
+	    askBeforeListbox.addItem("3 days before", "3");
+	    askBeforeListbox.addItem("5 days before", "5");
+	    askBeforeListbox.addItem("one week before", "7");
+	    askBeforeListbox.addItem("one month before", "30");
+	    askBeforeListbox.setSelectedIndex(2);
+	    verticalAlertPanel.add(tempPanel);
 	    
-	    //checkBox.addStyleName("ToDoListDialog_checkBox");
+	    
+	    
+	    //completedCheckBox.addStyleName("ToDoListDialog_checkBox");
 	    infoPanel.setSpacing(10);
 	    infoPanel.setSize("400", "400");
-	    infoPanel.add(checkBox);
-	    infoPanel.add(tempPanel);
+	    infoPanel.add(completedCheckBox);
+	    infoPanel.add(alertPanel);
 	    infoPanel.add(new Label("Value"));
 	   
 	    textArea.setSize("380", "200");
 	    infoPanel.add(textArea);
-	    
-	    
 	    
 	    tempPanel = new HorizontalPanel();
 	    tempPanel.setSpacing(10);
@@ -303,9 +332,14 @@ public class ToDoListDialog extends DialogBox {
 			taskLoc = toDoList.getList().indexOf(task);
 		
 		//create Task Object
-		task.setIsDone(checkBox.getValue());
+		task.setIsDone(completedCheckBox.getValue());
 		task.setContent(textArea.getHTML());
-		task.setDueDate(dateBox.getValue());
+		task.setDueDate(dueDateDateBox.getValue());
+		int index = askBeforeListbox.getSelectedIndex();
+		int askBeforeValue = Integer.parseInt(askBeforeListbox.getValue(index));
+		task.setAlertBefore(askBeforeValue);
+		task.setIsAlerOn(alertCheckbox.getValue());
+		
 		Collections.sort(toDoList.getList());
 		int newLoc = toDoList.getList().indexOf(task);
 		//create action
@@ -361,9 +395,24 @@ public class ToDoListDialog extends DialogBox {
 	 * @param task Task that will be edited.
 	 */
 	public void openEditMode(Task task){
-		dateBox.setValue(task.getDueDate());
 		textArea.setHTML(task.getContent()==null?"":task.getContent());
-		checkBox.setValue(task.getIsDone());
+		completedCheckBox.setValue(task.getIsDone());
+		
+		dueDateDateBox.setValue(task.getDueDate());
+		alertCheckbox.setValue(task.getIsAlerOn());
+		
+		//setalertbefore
+		int index = 0;
+		switch(task.getAlertBefore()){
+		case 0:index=0;break;
+		case 1:index=1;break;
+		case 3:index=2;break;
+		case 5:index=3;break;
+		case 7:index=4;break;
+		case 30:index=5;break;
+		}
+		askBeforeListbox.setSelectedIndex(index);
+		
 	}
 	
 	/**
