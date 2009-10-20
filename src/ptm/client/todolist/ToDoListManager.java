@@ -204,6 +204,7 @@ public class ToDoListManager {
 	public void postOpen(ToDoList toDoList){
 		ToDoListDialog dialog = new ToDoListDialog(toDoList, this);
 		ObjectListElement e = getApplicationManager().getSession().getToDo(toDoList.getId());
+		e.setOpen(true);
 		dialog.setPopupPosition(e.getX(), e.getY());
 		toDoListDialogs.add(dialog);
 		dialog.show();

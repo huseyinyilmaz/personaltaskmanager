@@ -153,6 +153,7 @@ public class ConnectionManager {
 					*/
 				applicationManager.getToolbarManager().getGeneralSyncButton().setEnabled(true);
 				timer.start();
+				
 			}
 
 			@Override

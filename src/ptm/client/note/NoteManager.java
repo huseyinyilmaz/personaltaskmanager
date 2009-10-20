@@ -68,6 +68,7 @@ public class NoteManager {
 	public void postOpen(Note note){
 		NoteDialog dialog = new NoteDialog(note, this);
 		ObjectListElement e = getApplicationManager().getSession().getNote(note.getId());
+		e.setOpen(true);
 		dialog.setPopupPosition(e.getX(), e.getY());
 		noteDialogList.add(dialog);
 		dialog.show();

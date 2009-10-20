@@ -18,10 +18,13 @@ public class ObjectListElement implements Serializable,Comparable<ObjectListElem
 	boolean isOpen;
 	
 	//Constructors
-	public ObjectListElement(){}
+	public ObjectListElement(){
+		//isOpen = true;
+	}
 	public ObjectListElement(long id, String name) {
 		this.id = id;
 		this.name = name;
+		//isOpen = true;
 	}
 	
 	/* (non-Javadoc)
