@@ -94,6 +94,7 @@ public class EventManager implements ClickHandler {
 
 			else if ((Widget)event.getSource() == d.getTaskTable()){
 				d.setCurrentRow(((FlexTable)(event.getSource())).getCellForEvent(event).getRowIndex());
+				d.evaluateButtonStatus();
 				return;
 			}
 

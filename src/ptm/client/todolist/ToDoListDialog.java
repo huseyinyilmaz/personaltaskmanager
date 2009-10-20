@@ -165,6 +165,7 @@ public class ToDoListDialog extends DialogBox {
 	    for (int i=0;i<toDoList.getList().size();i++){
 	    	addTaskTableRow(i, toDoList.getList().get(i));
 	    }
+	    setCurrentRow(-1);
 	    evaluateButtonStatus();
 	}
 
@@ -400,7 +401,6 @@ public class ToDoListDialog extends DialogBox {
 	/**
 	 * check if there is a selected task if there is not it disables edit and delete task buttons.
 	 */
-	//XXX bu methodu uygun yerlerde kullan
 	public void evaluateButtonStatus(){
 		boolean editButtonEnable = false;
 		boolean deleteButtonEnable = false;

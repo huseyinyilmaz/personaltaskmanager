@@ -153,7 +153,6 @@ public class ToDoListManager {
 	 */
 	public void deletePressed(){
 		int index = applicationManager.getToolbarManager().getTodoListBox().getSelectedIndex();
-		//TODO if there is no list selected do nothing.You could do it in event manager. you could even disable buttons
 		String name = applicationManager.getToolbarManager().getTodoListBox().getItemText(index);
 		long id = Long.parseLong(applicationManager.getToolbarManager().getTodoListBox().getValue(index));
 		if (Window.confirm("Are you sure that you want to delete Todo List [" + name + "]?")){
