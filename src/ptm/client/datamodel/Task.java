@@ -24,6 +24,8 @@ public class Task implements Serializable,Comparable<Task> {
 		this.content = content;
 		this.creationDate = new Date();
 		this.isDone = false;
+		this.isAlerOn = false;
+		this.alertBefore = 2;
 	}
 	
 	//DoNothing constructor (required by serializable)

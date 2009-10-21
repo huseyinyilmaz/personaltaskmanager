@@ -42,6 +42,7 @@ public class ToDoListDialog extends DialogBox {
 
 	// edit/create task widgets
 	private VerticalPanel infoPanel= new VerticalPanel();
+	private DisclosurePanel alertPanel = new DisclosurePanel("E-mail Options");
 	private RichTextArea textArea = new RichTextArea();
 	private CheckBox completedCheckBox= new CheckBox("Task Completed");
 	private Button okButton = new Button("OK");
@@ -120,7 +121,6 @@ public class ToDoListDialog extends DialogBox {
 	    //textArea.setStyleName("ToDoListDialog_textArea");
 	    
 	    //Alert disclosure panel
-	    DisclosurePanel alertPanel = new DisclosurePanel("E-mail Options");
 	    alertPanel.setAnimationEnabled(true);
 	    VerticalPanel verticalAlertPanel = new VerticalPanel();
 	    alertPanel.add(verticalAlertPanel);
@@ -395,6 +395,11 @@ public class ToDoListDialog extends DialogBox {
 	 * @param task Task that will be edited.
 	 */
 	public void openEditMode(Task task){
+		//close alert disclosure panel if it is open.
+		alertPanel.setAnimationEnabled(false);
+		alertPanel.setOpen(false);
+		alertPanel.setAnimationEnabled(true);
+		
 		textArea.setHTML(task.getContent()==null?"":task.getContent());
 		completedCheckBox.setValue(task.getIsDone());
 		
