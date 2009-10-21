@@ -1,7 +1,6 @@
 package ptm.server.main;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -22,8 +21,6 @@ import ptm.server.datamodel.Note;
 import ptm.server.datamodel.PMF;
 import ptm.server.datamodel.Task;
 import ptm.server.datamodel.ToDoList;
-import sun.util.logging.resources.logging;
-
 
 import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.users.User;

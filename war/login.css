@@ -1,0 +1,32 @@
+@CHARSET "ISO-8859-1";
+
+.mainPanel {
+	width = 100%;
+}
+
+.northPanel {
+	width = 100%;
+	margin-top: 10;
+	margin-bottom: 10;
+	border-bottom: 1px;
+	border-bottom-color: #3366CC;
+	border-bottom-style: solid;
+	background-color: #E5ECF9;
+ 
+	
+}
+
+.mainBody {
+	margin-right: 10;
+	margin-top: 10;
+	margin-left: 10;
+	margi-bottom: 10;
+}
+
+.loginButton{
+	margin-right: 10;
+}
+
+.mainTitle{
+	font-size: x-large;
+}
