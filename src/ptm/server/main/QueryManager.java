@@ -1,9 +1,21 @@
 package ptm.server.main;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import ptm.client.exception.PersistanceManagerException;
 import ptm.server.datamodel.Note;
@@ -33,6 +45,7 @@ public class QueryManager {
 	@SuppressWarnings("unchecked")
 	public static ptm.client.datamodel.Session getSession(User user){
 		//applyTaskPatch();
+		mailTasks();
 		//create return object
 		ptm.client.datamodel.Session session = new ptm.client.datamodel.Session(user.getEmail());
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -351,5 +364,60 @@ public class QueryManager {
     		pm.close();
     	}
 	}
+	
+	private static void sendEmail(User user,String msgSubject,String msgBody)
+	throws AddressException,MessagingException, UnsupportedEncodingException{
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("siteadminaccount@gmail.com", "Personal Task Manager"));
+            msg.addRecipient(Message.RecipientType.TO,
+                             new InternetAddress(user.getEmail(), user.getNickname()));
+            msg.setSubject(msgSubject);
+            msg.setText(msgBody);
+            Transport.send(msg);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void mailTasks(){
+		long day = 1000*60*60*24;
+		Date currentDate = new Date();
+
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Extent extent = pm.getExtent(ToDoList.class, false);
+		for (Object o : extent) {
+			ToDoList todoList = (ToDoList)o;
+			for(Task task:todoList.getList()){
+				if (!task.getIsDone()&&task.getIsAlerOn()&&task.getDueDate()!=null){
+					Date alertStartDate = task.getDueDate();
+					long alertStartLong = alertStartDate.getTime();
+					alertStartLong = alertStartLong - day*task.getAlertBefore();
+					alertStartDate.setTime(alertStartLong);
+
+					if (alertStartDate.before(currentDate)||currentDate.before(task.getDueDate())){
+					
+						try{
+							String body = "Your Task's due date is coming. Please visit us at http://personaltaskmanager.appspot.com\n----------------------------------\n\n This task is in to-do list named ["
+										+ todoList.getName() + "]\n\n\nTask Content\n----------------------------------\n\n"
+										+ task.getContent();	
+							sendEmail(todoList.getOwner(),"Your task's due date is coming",body);
+							
+						} catch (AddressException e) {
+							// ...
+						} catch (MessagingException e) {
+							// ...
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}//if
+					
+				}//if isdone
+			}//for
+		}
+		extent.closeAll();
+	}
+
 
 }

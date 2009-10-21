@@ -22,10 +22,6 @@
 		<servlet-class>ptm.server.cron.TaskMailer</servlet-class>
 	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>TaskMailer</servlet-name>
-		<url-pattern>/cron/taskmailer</url-pattern>
-	</servlet-mapping>
 
 
   <servlet-mapping>
@@ -36,6 +32,10 @@
     <servlet-name>mainConnectionService</servlet-name>
     <url-pattern>/ptm/connectionService</url-pattern> 
   </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TaskMailer</servlet-name>
+		<url-pattern>/cron/taskmailer</url-pattern>
+	</servlet-mapping>
  
   <security-constraint>
  
