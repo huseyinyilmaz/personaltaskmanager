@@ -45,7 +45,7 @@ public class QueryManager {
 	@SuppressWarnings("unchecked")
 	public static ptm.client.datamodel.Session getSession(User user){
 		//applyTaskPatch();
-		mailTasks();
+		//mailTasks();
 		//create return object
 		ptm.client.datamodel.Session session = new ptm.client.datamodel.Session(user.getEmail());
 		PersistenceManager pm = PMF.get().getPersistenceManager();
