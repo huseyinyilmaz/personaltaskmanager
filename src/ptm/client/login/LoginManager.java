@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -28,9 +27,16 @@ public class LoginManager {
 			" So you can depend on it." +
 			" Thank you for trying." +
 			"If you want to report a bug or check source code, visit <a target=\"_blank\" href=\"http://code.google.com/p/personaltaskmanager/\">project page</a>" +
-			"</p>";
+			"</p>"+
+			"<p>"+
+			"This application uses Google user service to keep track of users. So you have to be signed in with your google account to use this app." +
+			"Please click login button on top-right corner of this page to start application."+
+			"</p>"
 			
-		//mainPanel.setWidth("100%");
+			
+			;
+			
+		mainPanel.setWidth("100%");
 		mainPanel.addStyleName("mainPanel");
 		//create loginButtonPanel
 		loginButtonPanel.add(loginButton);
@@ -42,7 +48,7 @@ public class LoginManager {
 		tempDecoratorPanel.addStyleName("loginButton");
 		
 	    DockPanel tempNorthPanel = new DockPanel();
-	    //tempNorthPanel.setWidth("100%");
+	    tempNorthPanel.setWidth("100%");
 	    tempNorthPanel.addStyleName("northPanel");
 	    tempNorthPanel.add(tempDecoratorPanel, DockPanel.EAST);
 	    HTML tempTitleHTML = new HTML("Personal Task Manager");

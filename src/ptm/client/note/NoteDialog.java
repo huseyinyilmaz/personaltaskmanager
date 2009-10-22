@@ -3,6 +3,7 @@ package ptm.client.note;
 import ptm.client.connection.Action;
 import ptm.client.datamodel.Note;
 import ptm.client.datamodel.ObjectListElement;
+import ptm.client.toolbar.RichTextToolbar;
 
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.user.client.ui.Button;
@@ -14,6 +15,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NoteDialog extends DialogBox {
 	
@@ -43,6 +45,7 @@ public class NoteDialog extends DialogBox {
 	private DockPanel editPanel = new DockPanel();
 	private TextBox titleTextBox = new TextBox();
 	private RichTextArea noteTextArea = new RichTextArea();
+	private RichTextToolbar toolbar = new RichTextToolbar(noteTextArea);
 	private Button okButton = new Button("OK");
 	private Button cancelButton = new Button("Cancel");
 	
@@ -82,13 +85,19 @@ public class NoteDialog extends DialogBox {
 	    tempPanel.setSpacing(10);
 	    tempPanel.add(new Label("Title "));
 	    tempPanel.add(titleTextBox);
-	    titleTextBox.setSize("350","23");
+	    titleTextBox.setWidth("400");
+	    titleTextBox.setHeight("23");
+	    
 	    editPanel.add(tempPanel,DockPanel.NORTH);
-	    editPanel.add(noteTextArea,DockPanel.CENTER);
+	    VerticalPanel tempVerticalPanel = new VerticalPanel();
+	    tempVerticalPanel.add(toolbar);
+	    tempVerticalPanel.add(noteTextArea);
+	    editPanel.add(tempVerticalPanel,DockPanel.CENTER);
 	    editPanel.add(buttonPanel,DockPanel.SOUTH);
 	    editPanel.setCellHeight(buttonPanel, "30px");
 	    editPanel.setCellHorizontalAlignment(buttonPanel, DockPanel.ALIGN_CENTER);
-	    noteTextArea.setSize("400", "320");
+	    noteTextArea.setHeight("320");
+	    noteTextArea.setWidth("100%");
 	    //Create main Panel
 	    mainPanel.add(viewPanel);
 	    mainPanel.add(editPanel);

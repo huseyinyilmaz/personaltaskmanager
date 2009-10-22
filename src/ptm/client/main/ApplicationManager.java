@@ -7,14 +7,17 @@ import ptm.client.datamodel.Session;
 import ptm.client.note.NoteManager;
 import ptm.client.todolist.ToDoListManager;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ApplicationManager {
+	private final String version ="0.6.84 DEV";
 	private Session session;
 	private DockPanel mainPanel = new DockPanel();
 	private EventManager eventManager= new EventManager(this);
@@ -26,9 +29,6 @@ public class ApplicationManager {
 	private static long temproryObjectIdHolder=-1;
 	private ConnectionManager connectionManager = new ConnectionManager(this);
 	
-	
-	
-	
 	//public constructor
 	//public ApplicationManager(){}
 
@@ -36,6 +36,17 @@ public class ApplicationManager {
 	
 	//initialize Application.
 	public void initialize(){
+		//add uncaught exception handler here
+		GWT.UncaughtExceptionHandler handler = new GWT.UncaughtExceptionHandler() {
+			@Override
+			public void onUncaughtException(Throwable e) {
+				Window.alert("An exception occured.\nYour application might be in unstable state now.\nPlease refresh your application.\n" + 
+						     "Exception = " + e.toString());
+			}
+		};
+		
+		GWT.setUncaughtExceptionHandler(handler);
+		
 		//construct main panel
 		mainPanel.setWidth("100%");
 		mainPanel.add(toolbarManager.getToolBar(),DockPanel.WEST);
@@ -44,10 +55,13 @@ public class ApplicationManager {
 		dp.setWidget(toolbarManager.getGeneralLogoutButton());
 		dp.addStyleName("logoutGeneralButton");
 
+		HorizontalPanel tempHorizontalPanel = new HorizontalPanel();
+		tempHorizontalPanel.add(toolbarManager.getUserLabel());
+		tempHorizontalPanel.add(dp);
+		mainPanel.add(tempHorizontalPanel,DockPanel.EAST);
+		mainPanel.setCellHorizontalAlignment(tempHorizontalPanel, DockPanel.ALIGN_RIGHT);
 		
-		mainPanel.add(dp,DockPanel.EAST);
-		mainPanel.setCellHorizontalAlignment(dp, DockPanel.ALIGN_RIGHT);
-
+		
 		// Associate the Main panel with the HTML host page.
 	    RootPanel.get().add(mainPanel);
 	    //get Session Info From server
@@ -77,11 +91,15 @@ public class ApplicationManager {
 	 * this object is called after session was received
 	 */
 	public void startSession(Session session){
+		Window.setTitle("PTM v" + version);
 		//session do not sort objects on server side anymore
 		session.sortToDo();
 		session.sortNote();
 		
 		setSession(session);
+		
+		//set user name on main window.
+		toolbarManager.getUserLabel().setText(session.getUser());
 		
 		//fills list boxes.
 		getToolbarManager().StartSession();

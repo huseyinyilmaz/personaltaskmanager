@@ -6,6 +6,7 @@ import ptm.client.connection.Action;
 import ptm.client.datamodel.ObjectListElement;
 import ptm.client.datamodel.Task;
 import ptm.client.datamodel.ToDoList;
+import ptm.client.toolbar.RichTextToolbar;
 
 
 import com.google.gwt.event.dom.client.MouseUpEvent;
@@ -28,7 +29,7 @@ import com.google.gwt.user.datepicker.client.DateBox;
 /**
  * This is ToDoList Dialog class. it the dialog that is shown on the screen.
  * it also stores ToDoList objects which stores TaskObjects.Every Task method is in this class.
- * @author huseyin
+ * @author Huseyin
  */
 public class ToDoListDialog extends DialogBox {
 	// main list screen widgets
@@ -44,6 +45,7 @@ public class ToDoListDialog extends DialogBox {
 	private VerticalPanel infoPanel= new VerticalPanel();
 	private DisclosurePanel alertPanel = new DisclosurePanel("E-mail Options");
 	private RichTextArea textArea = new RichTextArea();
+	private RichTextToolbar toolbar = new RichTextToolbar(textArea);
 	private CheckBox completedCheckBox= new CheckBox("Task Completed");
 	private Button okButton = new Button("OK");
 	private Button cancelButton = new Button("Cancel");
@@ -157,7 +159,9 @@ public class ToDoListDialog extends DialogBox {
 	    infoPanel.add(alertPanel);
 	    infoPanel.add(new Label("Value"));
 	   
-	    textArea.setSize("380", "200");
+	    textArea.setWidth("100%");
+	    textArea.setHeight("200");
+	    infoPanel.add(toolbar);
 	    infoPanel.add(textArea);
 	    
 	    tempPanel = new HorizontalPanel();
@@ -395,6 +399,7 @@ public class ToDoListDialog extends DialogBox {
 	 * @param task Task that will be edited.
 	 */
 	public void openEditMode(Task task){
+		
 		//close alert disclosure panel if it is open.
 		alertPanel.setAnimationEnabled(false);
 		alertPanel.setOpen(false);
@@ -417,7 +422,6 @@ public class ToDoListDialog extends DialogBox {
 		case 30:index=5;break;
 		}
 		askBeforeListbox.setSelectedIndex(index);
-		
 	}
 	
 	/**

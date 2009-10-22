@@ -44,9 +44,8 @@ public class ToolbarManager {
 	//private Button generalHideAllButton = new Button("Hide All");
 	private Button generalSyncButton = new Button("Sync");
 	private Button generalLogoutButton = new Button("Log out");
-	private Label counterLabel = new Label();
 	
-	
+	private Label userLabel = new Label("loading user data");
 	//private Button createNoteButton = new Button("Create a new note");
 	private ApplicationManager applicationManager;
 	
@@ -107,7 +106,7 @@ public class ToolbarManager {
 
 		generalPanel.add(generalSyncButton);
 		//generalPanel.add(generalLogoutButton);
-		generalPanel.add(counterLabel);
+		//generalPanel.add(counterLabel);
 		generalSyncButton.addStyleName("toolbarGeneralButton");
 		generalLogoutButton.addStyleName("toolbarGeneralButton");
 		generalLogoutButton.addClickHandler(applicationManager.getEventManager());
@@ -126,12 +125,10 @@ public class ToolbarManager {
 		toolBarPanel.add(dp);	
 		toolBarPanel.addStyleName("toolbarPanel");
 		
-		
+		userLabel.addStyleName("userLabel");
+
 	}
 	
-	public Label getCounterLabel() {
-		return counterLabel;
-	}
 
 	/**
 	 * Starts session for tool bar. It fills list boxes.
@@ -197,54 +194,47 @@ public class ToolbarManager {
 			generalSyncButton.setText("Sync");
 		
 	}
+
 	//setters and getters
 	public VerticalPanel getToolBar(){
 		return toolBarPanel;
 	}
-	
 	public Button getGeneralLogoutButton(){
 		return generalLogoutButton;
 	}
-	
 	public ListBox getTodoListBox() {
 		return todoListBox;
 	}
-
 	public Button getCreateTodoButton() {
 		return createTodoButton;
 	}
-
 	public Button getDeleteTodoButton() {
 		return deleteTodoButton;
 	}
-
 	public Button getEditTodoButton() {
 		return editTodoButton;
 	}
-
 	public Button getOpenTodoButton() {
 		return openTodoButton;
 	}
-
 	public ListBox getNoteListBox() {
 		return noteListBox;
 	}
-
 	public Button getCreateNoteButton() {
 		return createNoteButton;
 	}
-
 	public Button getDeleteNoteButton() {
 		return deleteNoteButton;
 	}
-
 	public Button getOpenNoteButton() {
 		return openNoteButton;
 	}
-	
 	public Button getGeneralSyncButton() {
 		return generalSyncButton;
 	}
-	
+	public Label getUserLabel() {
+		return userLabel;
+	}
+
 	
 }
