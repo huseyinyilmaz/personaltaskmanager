@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ApplicationManager {
-	private final String version ="0.6.84 DEV";
+	private final String version ="0.7.89 DEV";
 	private Session session;
 	private DockPanel mainPanel = new DockPanel();
 	private EventManager eventManager= new EventManager(this);
@@ -37,6 +37,7 @@ public class ApplicationManager {
 	//initialize Application.
 	public void initialize(){
 		//add uncaught exception handler here
+		/* GWT has a bug on chrome andfirefox. 
 		GWT.UncaughtExceptionHandler handler = new GWT.UncaughtExceptionHandler() {
 			@Override
 			public void onUncaughtException(Throwable e) {
@@ -46,7 +47,7 @@ public class ApplicationManager {
 		};
 		
 		GWT.setUncaughtExceptionHandler(handler);
-		
+		*/
 		//construct main panel
 		mainPanel.setWidth("100%");
 		mainPanel.add(toolbarManager.getToolBar(),DockPanel.WEST);
