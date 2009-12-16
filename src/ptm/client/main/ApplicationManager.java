@@ -7,7 +7,6 @@ import ptm.client.datamodel.Session;
 import ptm.client.note.NoteManager;
 import ptm.client.todolist.ToDoListManager;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
@@ -126,7 +125,6 @@ public class ApplicationManager {
 		}
 		
 		getConnectionManager().sync();
-		
 	}
 	
 	//Getters

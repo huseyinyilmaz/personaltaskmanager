@@ -48,7 +48,6 @@ public class NoteManager {
 	public void openPressed (){
 		int index = applicationManager.getToolbarManager().getNoteListBox().getSelectedIndex();
 		long id = Long.parseLong(applicationManager.getToolbarManager().getNoteListBox().getValue(index));
-	
 		Action action = new Action();
 		action.setActionType(Action.ActionType.NOTE_OPEN);
 		action.setObjectId(id);
@@ -57,6 +56,7 @@ public class NoteManager {
 		//we force system to sync action to get our list as soon as possible
 		applicationManager.getConnectionManager().sync();
 		applicationManager.getToolbarManager().getOpenNoteButton().setEnabled(false);
+		//throw new NullPointerException();
 	}
 	
 	/**
