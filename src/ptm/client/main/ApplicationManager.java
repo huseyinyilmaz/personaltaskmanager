@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ApplicationManager {
-	private final String version ="0.7.89";
+	private final String version ="0.7.93";
 	private Session session;
 	private DockPanel mainPanel = new DockPanel();
 	private EventManager eventManager= new EventManager(this);
