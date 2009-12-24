@@ -28,6 +28,8 @@ public class ApplicationManager {
 	private static long temproryObjectIdHolder=-1;
 	private ConnectionManager connectionManager = new ConnectionManager(this);
 	
+	
+	private static int zIndex = 1;
 	//public constructor
 	//public ApplicationManager(){}
 
@@ -128,6 +130,8 @@ public class ApplicationManager {
 	}
 	
 	//Getters
+	public int getNextZIndex(){ return zIndex++;}
+	
 	public ToolbarManager getToolbarManager(){
 		return toolbarManager;
 	}

@@ -5,6 +5,7 @@ import ptm.client.datamodel.Note;
 import ptm.client.datamodel.ObjectListElement;
 import ptm.client.toolbar.RichTextToolbar;
 
+import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DeckPanel;
@@ -116,6 +117,7 @@ public class NoteDialog extends DialogBox {
 	    //setContent
 	    viewNote.setHTML(note.getContent());
 
+	    makeTop();
 	}
 	
 	/**
@@ -197,6 +199,15 @@ public class NoteDialog extends DialogBox {
 	
 	
 	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.DialogBox#beginDragging(com.google.gwt.event.dom.client.MouseDownEvent)
+	 */
+	@Override
+	protected void beginDragging(MouseDownEvent event) {
+		super.beginDragging(event);
+		makeTop();
+	}
+
+	/* (non-Javadoc)
 	 * @see com.google.gwt.user.client.ui.DialogBox#endDragging(com.google.gwt.event.dom.client.MouseUpEvent)
 	 */
 	@Override
@@ -225,8 +236,11 @@ public class NoteDialog extends DialogBox {
 		return note.getId();
 	}
 	
+	public void makeTop(){
+		getElement().getStyle().setProperty("zIndex", "" + noteManager.getApplicationManager().getNextZIndex());
+	}
 	
-	//getters and setters
+	//Getters and Setters
 	public Button getEditButton() {
 		return editButton;
 	}
