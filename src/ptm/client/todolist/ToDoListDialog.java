@@ -9,6 +9,7 @@ import ptm.client.datamodel.ToDoList;
 import ptm.client.toolbar.RichTextToolbar;
 
 
+import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
@@ -63,6 +64,10 @@ public class ToDoListDialog extends DialogBox {
 	//ToDoList object that this dialog represents on screen.
 	private ToDoList toDoList;
 
+	/*
+		Holds zIndex of Dialogs
+	*/
+	private static int zIndex = 1;
 	/* 
 	 * this is used when we edit or create a new task. after we press ok/cancel button.
 	 * we use this task to apply changes.
@@ -206,6 +211,21 @@ public class ToDoListDialog extends DialogBox {
 	
 	
 	
+	/* (non-Javadoc)
+	 * @see com.google.gwt.user.client.ui.DialogBox#beginDragging(com.google.gwt.event.dom.client.MouseDownEvent)
+	 */
+	@Override
+	protected void beginDragging(MouseDownEvent event) {
+		super.beginDragging(event);
+		int zIndex = nextZIndex();
+		getElement().getStyle().setProperty("zIndex", "" + zIndex);
+		setTitle("" + zIndex);
+	}
+
+
+
+
+
 	/* (non-Javadoc)
 	 * @see com.google.gwt.user.client.ui.DialogBox#endDragging(com.google.gwt.event.dom.client.MouseUpEvent)
 	 */
@@ -481,6 +501,7 @@ public class ToDoListDialog extends DialogBox {
 	}
 	
 	//Getters and Setters
+	private int nextZIndex(){return zIndex++;}
 	public void setElementId(long oldId,long newId){
 		toDoList.setElementId(oldId,newId);
 	}
