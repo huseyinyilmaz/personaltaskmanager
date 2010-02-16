@@ -113,6 +113,7 @@ public class ToDoListDialog extends DialogBox {
 	    buttonPanel.add(deleteButton);
 	    buttonPanel.add(closeButton);
 	    
+	    
 	    newButton.addClickHandler(toDoListManager.getEventManager());
 	    editButton.addClickHandler(toDoListManager.getEventManager());
 	    deleteButton.addClickHandler(toDoListManager.getEventManager());

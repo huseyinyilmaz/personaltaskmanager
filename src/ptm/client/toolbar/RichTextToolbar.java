@@ -219,7 +219,7 @@ public class RichTextToolbar extends Composite {
    * We use an inner EventListener class to avoid exposing event methods on the
    * RichTextToolbar itself.
    */
-  private class EventListener implements ClickListener, ChangeListener,
+private class EventListener implements ClickListener, ChangeListener,
       KeyboardListener {
 
     public void onChange(Widget sender) {
